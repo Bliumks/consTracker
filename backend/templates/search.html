@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Search</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+</head>
+<body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="{{url_for('static', filename='logo.jpg')}}" width="70" height="30"alt=""></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/api/regPerson">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/api/updatePerson">Update</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/api/searchPerson">Search</a>
+                    </li>
+                </ul>
+                <form class="d-flex" method="post" action="/api/searchPerson">
+                    <input class="form-control me-2" type="text"  name="lname" id="lname" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-secondary" type="submit" name="submit" value="s">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>  
+            <div class="jumbotron">
+                
+                    <h2 style="text-align: center;" class="mb-5">Search</h2>
+                
+                
+                    
+                        <form class="form-group row g-3 action="/api/searchPerson" method="post">
+                            <div class="col-md-6">
+                                <input type="text" name="fname" id="fname" class="form-control" placeholder="First Name">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" name="lname" id="lname" class="form-control" placeholder="Last Name">
+                            </div>
+                            <div class="dropdown col-md-12 mt-4" style="text-align: right;">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    More Parameters
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <div class="dropdown-item">
+                                        <input type="text" name="email" id="email" class="form-control" placeholder="Email">
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <input type="text" name="city" id="city" class="form-control" placeholder="City">
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <input type="number" name="phone" id="phone" class="form-control" placeholder="Phone Number">
+                                    </div>
+
+                                    <div class="dropdown-item">
+                                        <input type="text" name="tag" id="tag" class="form-control" placeholder="Tag">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary ml-3" type="submit" name="submit" value="search">Search</button>
+                        </form>
+                    
+               
+                
+            </div>
+            
+
+            <div class="navbar navbar-default">
+                <h2>Result</h2>
+            </div>
+            <div class="container-fluid ">
+
+                <div class="row g-3 " style="justify-content: start; align-items: center;">
+                    {% for l in t %}
+                    <div class="col-md-3 mb-4" style="justify-content: center;">
+                        <div class="card" style="width: 18rem; text-align: center; box-shadow: 0px 0px 15px 7px rgba(0,0,0,0.39);">
+                            <div class="card-body list-group-item">
+                                <h3 class="card-title">{{l['fname']}} {{l['lname']}}</h3>
+                            </div>
+                            <div class="card-body list-group-item" style="justify-content: center;">
+                                <h6>Emails</h6>
+                                <p> {{l['email']}}</p>
+                                <p> {{l['semail']}}</p>
+                            </div>
+                            <div class="card-body list-group-item" style="justify-content: center;">
+                                <h6> Phones</h6>
+                                <p> {{l['phone']}}</p>
+                                <p> {{l['mphone']}}</p>
+                            </div>
+                            <div class="card-body list-group-item" style="justify-content: center; ">
+                                <h6>Address</h6>
+                                <p>{{l['address']}}</p>
+                                <p>{{l['city']}} {{l['province']}} {{l['postal']}}</p>
+                                <span class="badge badge-primary">{{l['supportlvl']}}</span>
+                                <span class="badge badge-warning">{{l['volunteer']}}</span>
+                                <span class="badge badge-success">{{l['tag']}}</span>
+                            </div>
+                        
+                            <div class="card-body list-group-item" style="justify-content: center;">
+                        
+                                <a href="/api/updatePerson" class="card-link"><button type="submit" name="submit" value="u"
+                                        class="btn btn-outline-warning">Update</button> </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% endfor %}
+                </div>
+                        
+                 
+               
+            </div>
+</body>
+</html>
